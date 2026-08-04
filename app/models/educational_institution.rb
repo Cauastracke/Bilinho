@@ -1,0 +1,2 @@
+class EducationalInstitution < ApplicationRecord
+end
