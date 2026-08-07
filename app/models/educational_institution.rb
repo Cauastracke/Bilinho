@@ -1,5 +1,5 @@
 class EducationalInstitution < ApplicationRecord
-    TYPES = ["universidade","escola","creche"].freeze
+    TYPES = ["university","school","daycare"].freeze
     validates :name, presence: true, uniqueness: true
     validates :cnpj, presence: true, uniqueness: true, cnpj: true
     normalizes :tipo, with: -> tipo {tipo.strip.downcase}

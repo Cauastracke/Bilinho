@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  invoice_amount: 1.5
+  invoice_due_date: 2026-08-07
+  enrollment: one
+  status: MyString
+
+two:
+  invoice_amount: 1.5
+  invoice_due_date: 2026-08-07
+  enrollment: two
+  status: MyString

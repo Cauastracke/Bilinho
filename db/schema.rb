@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_07_191943) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_07_194438) do
   create_table "educational_institutions", force: :cascade do |t|
     t.string "cnpj"
     t.datetime "created_at", null: false
@@ -32,6 +32,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_07_191943) do
     t.index ["student_id"], name: "index_enrollments_on_student_id"
   end
 
+  create_table "invoices", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "enrollment_id", null: false
+    t.float "invoice_amount"
+    t.date "invoice_due_date"
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.index ["enrollment_id"], name: "index_invoices_on_enrollment_id"
+  end
+
   create_table "students", force: :cascade do |t|
     t.date "birthdate"
     t.string "cpf"
@@ -45,4 +55,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_07_191943) do
 
   add_foreign_key "enrollments", "educational_institutions"
   add_foreign_key "enrollments", "students"
+  add_foreign_key "invoices", "enrollments"
 end
