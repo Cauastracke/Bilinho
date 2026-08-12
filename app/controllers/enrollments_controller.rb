@@ -3,7 +3,11 @@ class EnrollmentsController < ApplicationController
 
   # GET /enrollments
   def index
-    @enrollments = Enrollment.all
+    if params[:student_id]
+      @enrollments = Enrollment.where(student_id: params[:student_id])
+    else
+      @enrollments = Enrollment.all
+    end
 
     render json: @enrollments
   end

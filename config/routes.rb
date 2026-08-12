@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :invoices
   resources :enrollments
-  resources :students
+  resources :students do
+    resources :enrollments, only: [:index]
+  end
   resources :educational_institutions
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -30,7 +30,6 @@ class Enrollment < ApplicationRecord
 
           if due_date <= initial_date.day
             invoice_due_date = this_month_due_date + (1).months
-
           else 
             invoice_due_date = this_month_due_date
           end
