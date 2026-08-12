@@ -3,8 +3,11 @@ class InvoicesController < ApplicationController
 
   # GET /invoices
   def index
-    @invoices = Invoice.all
-
+    if params[:enrollment_id]
+      @invoices = Invoice.where(enrollment_id: params[:enrollment_id])
+    else  
+      @invoices = Invoice.all
+    end
     render json: @invoices
   end
 
