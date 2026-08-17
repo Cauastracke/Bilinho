@@ -3,7 +3,7 @@ class Student < ApplicationRecord
     PAYMENT_METHODS = ["boleto","cartão"]
     has_many :enrollments
     validates :name, format: { with: /\A\D+\z/, message: "não deve conter números" }
-    validates :name, uniqueness: true, presence: true
+    validates :name, presence: true
     validates :cpf, uniqueness: true, presence: true, cpf: true
     normalizes :gender, with: -> gender {gender.strip.downcase}
     validates :gender, inclusion: {in: GENDERS}
