@@ -1,5 +1,5 @@
 class Invoice < ApplicationRecord
-  STATUS =["open","overdue","paid"]
+  STATUS =["open","overdue","paid","cancelled","refunded","refund_pending",]
   belongs_to :enrollment
   validates :invoice_amount, presence:true
   validates :invoice_due_date, presence:true

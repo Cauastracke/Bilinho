@@ -38,7 +38,7 @@ class InvoicesController < ApplicationController
 
   # DELETE /invoices/1
   def destroy
-    @invoice.destroy!
+    @invoice.update!(status: "cancelled")
   end
 
   private
