@@ -2,12 +2,16 @@ class Enrollment < ApplicationRecord
   belongs_to :educational_institution
   belongs_to :student
   has_many :invoices
+  STATUS =["active", "cancelled", "completed"]
   validates :course_total_value, presence: true, numericality: {greater_than: 0}
   validates :max_payments, presence: true, numericality:{greater_than_or_equal_to: 1}
   validates :due_date, presence: true, numericality:{ greater_than_or_equal_to: 1}
   validates :due_date, presence: true, numericality:{ less_than_or_equal_to: 31}
   validates :course_name, presence: true
   validates :student_id, presence: true
+  validates :status, presence: true
+  validates :status, inclusion: {in: STATUS}
+
   validates :educational_institution_id, presence: true
 
   after_create :create_invoices

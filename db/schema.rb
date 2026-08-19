@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_10_165849) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_17_192442) do
   create_table "educational_institutions", force: :cascade do |t|
     t.string "cnpj"
     t.datetime "created_at", null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_165849) do
     t.integer "due_date"
     t.integer "educational_institution_id", null: false
     t.integer "max_payments"
+    t.string "status", default: "active"
     t.integer "student_id", null: false
     t.datetime "updated_at", null: false
     t.index ["educational_institution_id"], name: "index_enrollments_on_educational_institution_id"
