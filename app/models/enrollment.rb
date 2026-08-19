@@ -14,6 +14,8 @@ class Enrollment < ApplicationRecord
 
   validates :educational_institution_id, presence: true
 
+  validate :status_completed_requires_all_invoices_paid
+
   after_create :create_invoices
 
   private
@@ -49,5 +51,11 @@ class Enrollment < ApplicationRecord
         status: "open"
       )
     end
+  end
+  def status_completed_requires_all_invoices_paid
+    return unless status == "completed"
+    all_invoices_paid = invoices.where.not(status: "paid").none?
+
+    errors.add(:status, "não pode ser completed com faturas em aberto") unless all_invoices_paid
   end
 end
