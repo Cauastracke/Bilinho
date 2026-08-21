@@ -5,6 +5,7 @@ class Invoice < ApplicationRecord
   validates :invoice_due_date, presence:true 
   validates :status, presence:true
   validates :status, inclusion: {in: STATUS}
+  validate :status_must_stay_valid_when_enrollment_completed
 
 
   after_update :complete_enrollment_if_fully_paid
@@ -21,4 +22,15 @@ class Invoice < ApplicationRecord
     end
   end
 
+  def status_must_stay_valid_when_enrollment_completed
+  return unless enrollment&.status == "completed"
+  return if ["paid", "refund_pending", "refunded"].include?(status)
+
+  errors.add(:status, "a matrícula já está concluída, não é possível alterar essa fatura para open, overdue ou cancelled")
+  end
+
+  def reopen
+    enrollment.update!(status: "active") if enrollment.status == "completed"
+    update!(status: "open")
+  end
 end

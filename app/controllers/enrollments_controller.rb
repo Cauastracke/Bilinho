@@ -1,5 +1,5 @@
 class EnrollmentsController < ApplicationController
-  before_action :set_enrollment, only: %i[ show update destroy ]
+  before_action :set_enrollment, only: %i[ show update destroy reprove ]
 
   # GET /enrollments
   def index
@@ -35,6 +35,11 @@ class EnrollmentsController < ApplicationController
     else
       render json: @enrollment.errors, status: :unprocessable_content
     end
+  end
+
+  def reprove
+    @enrollment.reprove
+    render json: @enrollment
   end
 
   # DELETE /enrollments/1

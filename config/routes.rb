@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
-  resources :invoices
+  resources :invoices do
+    put :reopen, on: :member
+  end
+
   resources :enrollments do
     resources :invoices, only: [:index]
+    put :reprove, on: :member
   end
+
   resources :students do
     resources :enrollments, only: [:index]
   end
+
   resources :educational_institutions
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  before_action :set_invoice, only: %i[ show update destroy ]
+  before_action :set_invoice, only: %i[ show update destroy reopen ]
 
   # GET /invoices
   def index
@@ -35,10 +35,15 @@ class InvoicesController < ApplicationController
       render json: @invoice.errors, status: :unprocessable_content
     end
   end
-
+  def reopen
+    @invoice.reopen
+    render json: @invoice
+  end
   # DELETE /invoices/1
   def destroy
-    @invoice.update!(status: "cancelled")
+    unless @invoice.update(status: "cancelled")
+      render json: @invoice.errors, status: :unprocessable_content
+    end
   end
 
   private

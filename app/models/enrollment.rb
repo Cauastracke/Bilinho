@@ -18,9 +18,15 @@ class Enrollment < ApplicationRecord
 
   after_create :create_invoices
 
+  def reprove
+      update!(status: "active")
+      generate_invoices(6)
+      update!(max_payments: max_payments + 6)
+  end
+
   private
 
-  def create_invoices
+  def generate_invoices(quantidade)
     today = Date.today
     due_date_already_passed_this_month = due_date <= today.day
 
@@ -32,7 +38,7 @@ class Enrollment < ApplicationRecord
 
     invoice_amount = course_total_value / max_payments
 
-    max_payments.times do |i|
+    quantidade.times do |i|
       current_month = base_month + i.months
 
       last_day_of_month = current_month.end_of_month.day
@@ -57,5 +63,8 @@ class Enrollment < ApplicationRecord
     all_invoices_paid = invoices.where.not(status: "paid").none?
 
     errors.add(:status, "não pode ser completed com faturas em aberto") unless all_invoices_paid
+  end
+  def create_invoices ()
+    generate_invoices(max_payments)
   end
 end
