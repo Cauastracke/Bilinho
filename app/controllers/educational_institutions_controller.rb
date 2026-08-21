@@ -35,7 +35,11 @@ class EducationalInstitutionsController < ApplicationController
 
   # DELETE /educational_institutions/1
   def destroy
-    @educational_institution.destroy!
+    if @educational_institution.update(status: "disabled")
+      render json: @educational_institution
+    else
+      render json: @educational_institution.errors, status: :unprocessable_content
+    end
   end
 
   private

@@ -35,9 +35,12 @@ class StudentsController < ApplicationController
 
   # DELETE /students/1
   def destroy
-    @student.destroy!
+    if @student.update(status: "disabled")
+      render json: @student
+    else
+      render json: @student.errors, status: :unprocessable_content
+    end
   end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student

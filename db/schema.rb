@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_17_192442) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_21_172954) do
   create_table "educational_institutions", force: :cascade do |t|
     t.string "cnpj"
     t.datetime "created_at", null: false
     t.string "name"
+    t.string "status", default: "active"
     t.string "tipo"
     t.datetime "updated_at", null: false
   end
@@ -51,6 +52,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_17_192442) do
     t.string "name"
     t.string "payment_method"
     t.string "phone"
+    t.string "status", default: "active"
     t.datetime "updated_at", null: false
   end
 

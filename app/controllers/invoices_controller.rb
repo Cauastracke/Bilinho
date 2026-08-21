@@ -41,7 +41,9 @@ class InvoicesController < ApplicationController
   end
   # DELETE /invoices/1
   def destroy
-    unless @invoice.update(status: "cancelled")
+    if @invoice.update(status: "cancelled")
+      render json: @invoice
+    else
       render json: @invoice.errors, status: :unprocessable_content
     end
   end
