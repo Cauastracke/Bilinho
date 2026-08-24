@@ -44,7 +44,8 @@ class EnrollmentsController < ApplicationController
 
   # DELETE /enrollments/1
   def destroy
-    @enrollment.destroy!
+    @enrollment.cancel
+    render json: @enrollment
   end
 
   private

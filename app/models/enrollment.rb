@@ -24,6 +24,19 @@ class Enrollment < ApplicationRecord
       update!(max_payments: max_payments + 6)
   end
 
+  def cancel
+    today = Time.current
+    if today - created_at <= 7.days
+      update!(status: "cancelled")
+      all_open_invoices = invoices.where(status: "open")
+      all_open_invoices.update!(status: "cancelled")
+    else
+      first_day_after_two_months = today.beginning_of_month + 2.months
+      invoices_to_be_cancelled = invoices.where(status: "open").where("invoice_due_date >= ?", first_day_after_two_months)
+      invoices_to_be_cancelled.update!(status: "cancelled")
+      update!(status: "cancelled")
+    end
+  end
   private
 
   def generate_invoices(quantidade)
