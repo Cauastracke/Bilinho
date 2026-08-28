@@ -14,7 +14,7 @@ class Invoice < ApplicationRecord
     if saved_change_to_status?
       new_status = status
       all_invoices_paid = enrollment.invoices.where.not(status: "paid").none?
-      if new_status == "paid" && all_invoices_paid == true
+      if new_status == "paid" && all_invoices_paid == true && enrollment.status != "cancelled"
         enrollment.update!(
           status: "completed"
         )
