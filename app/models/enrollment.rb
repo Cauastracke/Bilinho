@@ -15,6 +15,7 @@ class Enrollment < ApplicationRecord
   validates :educational_institution_id, presence: true
 
   validate :status_completed_requires_all_invoices_paid
+  validate :financial_fields_are_immutable, on: :update
 
   after_create :create_invoices
 
@@ -76,6 +77,15 @@ class Enrollment < ApplicationRecord
     all_invoices_paid = invoices.where.not(status: "paid").none?
 
     errors.add(:status, "não pode ser completed com faturas em aberto") unless all_invoices_paid
+  end
+
+  def financial_fields_are_immutable
+    return unless course_total_value_changed? || max_payments_changed? || due_date_changed?
+
+    message = "não pode ser alterado após a matrícula"
+    errors.add(:course_total_value, message)
+    errors.add(:max_payments, message)
+    errors.add(:due_date, message)
   end
   def create_invoices ()
     generate_invoices(max_payments)
